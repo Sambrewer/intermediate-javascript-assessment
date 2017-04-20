@@ -114,19 +114,7 @@ mustang.drive();
 // Your method may be passed punctuation, numbers or other non-letter characters
 // and should neither modify them nor break when encountering them.
 String.prototype.grammarPolice = function () {
-  str = this.split(' ');
-  for (var i = 0; i < str.length; i++) {
-    for (var j = 0; j < str[i].length; j++) {
-      if (str[i][j].isLetter){
-        if (j === 0) {
-          str[i[j]] = str[i[j]].toUpperCase();
-        } else {
-          str[i[j]] = str[i[j]].toLowerCase();
-        }
-      }
-    return title.join('');
-  }
-}
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 
