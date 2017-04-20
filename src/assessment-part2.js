@@ -11,20 +11,20 @@
 // You must use two .then functions to handle the response object.
 // Chain these functions off of $http (do not put them in variables)
 // The response object will look like this :
-/* 
-    {
-      data: [
-        {
-		 email: "awilliams0@intel.com",
-		 first_name: "Alan",
-		 gender: "Male",
-		 id: 1,
-		 last_name: "Williams"
-        },
-        { //...
-      ]
-    }
-*/
+
+    // {
+    //   data: [
+    //     {
+		//  email: "awilliams0@intel.com",
+		//  first_name: "Alan",
+		//  gender: "Male",
+		//  id: 1,
+		//  last_name: "Williams"
+    //     },
+    //     { //...
+    //   ]
+    // }
+
 
 // In the first .then function you use, assign the first user object (located in the response object)
 // to the variable 'firstUser' (previously declared).
@@ -42,8 +42,14 @@ function noWeakLink() {
     url: '/api/users'
   })
   // CODE HERE...
-
-
+  .then(function(response) {
+    firstUser = response.data[0]
+    return response
+  })
+  .then(function(response) {
+    thirdUser = response.data[2]
+    return response.data[9]
+  })
   return promise;
 }
 
@@ -69,13 +75,13 @@ var elephant = {
   name: 'Horton'
 }
 function large() {
-
+  // console.log(this);
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
 
-
-
+boundToElephant = large.bind(elephant)
+// console.log(boundToElephant(), large());
 // *************
 // * PROBLEM 3 *
 // *************
@@ -86,7 +92,9 @@ function large() {
 // Use explicit binding to give capacity the context of crew and return the result.
 
 // CODE HERE...
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew)
+}
 
 
 // *************
@@ -102,7 +110,11 @@ function large() {
 
 // CODE HERE...
 
-
+function accountingOffice(assets) {
+  return function(liabilities) {
+    return assets + liabilities;
+  }
+}
 
 // *************
 // * PROBLEM 5 *
@@ -127,7 +139,16 @@ function large() {
 
 // CODE HERE...
 
-
+function forgetter(name) {
+  var memberObj = {}
+  memberObj.name = name;
+  memberObj.remember = [];
+  return function rememberall(item) {
+     memberObj.remember.push(item);
+    //  console.log(memberObj);
+     return memberObj;
+  }
+}
 
 // *************
 // * PROBLEM 6 *
@@ -152,5 +173,36 @@ function large() {
 // }
 
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
-
+function frodo(startingHungerValue, startingDangerValue) {
+  var frodoObj = {
+    hunger: startingHungerValue,
+    danger: startingDangerValue
+  }
+  var frodoMoves = {
+      dinnerOverFire: function() {
+      while (frodoObj.hunger > 0){frodoObj.hunger -= 25}
+      while (frodoObj.danger < 100){frodoObj.danger += 40}
+      if (frodoObj.hunger < 0) {
+        frodoObj.hunger = 0;
+      }
+      if (frodoObj.danger > 100) {
+        frodoObj.danger = 100;
+      }
+      return frodoObj
+    },
+    hidingInBush: function() {
+      while (frodoObj.hunger < 100) {frodoObj.hunger += 35}
+      while (frodoObj.danger > 0){frodoObj.danger -= 20}
+      if (frodoObj.hunger > 100) {
+        frodoObj.hunger = 100;
+      }
+      if (frodoObj.danger < 0) {
+        frodoObj.danger = 0;
+      }
+      return frodoObj
+    }
+  }
+  // console.log(frodoObj);
+  return frodoMoves
+}
 // CODE HERE...
